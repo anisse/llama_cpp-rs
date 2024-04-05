@@ -301,7 +301,7 @@ impl LlamaModel {
             // `out_buf` is a `Vec<Token>`, and `Token` is `#[repr(transparent)]` over an `i32`.
             llama_tokenize(
                 **model_lock,
-                content.as_ptr() as *const i8,
+                content.as_ptr() as *const u8,
                 content.len() as i32,
                 out_buf.as_mut_ptr() as *mut i32,
                 out_buf.capacity() as i32,
@@ -376,7 +376,7 @@ impl LlamaModel {
             llama_token_to_piece(
                 **model_lock,
                 token.0,
-                buffer.as_mut_ptr() as *mut i8,
+                buffer.as_mut_ptr() as *mut u8,
                 std::os::raw::c_int::from(initial_size),
             )
         };
@@ -390,7 +390,7 @@ impl LlamaModel {
                 llama_token_to_piece(
                     **model_lock,
                     token.0,
-                    buffer.as_mut_ptr() as *mut i8,
+                    buffer.as_mut_ptr() as *mut u8,
                     std::os::raw::c_int::from(buffer.len() as i32),
                 )
             };
@@ -434,7 +434,7 @@ impl LlamaModel {
                 llama_cpp_sys::llama_token_to_piece(
                     **model_lock,
                     t.0,
-                    token_buf.as_mut_ptr() as *mut i8,
+                    token_buf.as_mut_ptr() as *mut u8,
                     token_buf.len() as i32,
                 )
             };
